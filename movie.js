@@ -1,4 +1,5 @@
 const ssoTedbReadApiKey = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZjA3NGE3ZjBhMWZhOTllOThlMGVjZWJmODdkZDNmZCIsInN1YiI6IjY1YWZjMDdmYWFkOWMyMDEwOTA0NzQ1YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hqpwUyMkWou5v8500grCh-nx1iLOtZpJlOFKCDK5Gq8"
+const Bouttonseconnecter = document.querySelector(".connect")
 
 window.onload = async () =>{
     if(!location.search.includes("request_token=")){
@@ -8,15 +9,19 @@ window.onload = async () =>{
     let token = location.search.split("request_token=")[1]?.split("&")?.[0]
 
     if(token){
+
         getNewSession(token)
         .then(sessionData =>{
-            sessionStorage.setItem("tmdbSessionId",sessionData.session.id)
+            sessionStorage.setItem("tmdbSessionId",sessionData.session_id)
             sessionStorage.setItem("tmdbAccessToken", token)
             location.href = "http://127.0.0.1:5500"
+            console.log(sessionData.session_id)
+            Bouttonseconnecter.innerHTML = "Se déconnecter"
+            console.log(Bouttonseconnecter.innerHTML)
         })
         .catch(err =>{
-            console.error(err);
-            location.href = "http://127.0.0.1:5500"
+            console.error("error",err);
+            //location.href = "http://127.0.0.1:5500"
         })
 
     }
@@ -39,18 +44,20 @@ async function getNewTMDBToken(){
 }
 
 async function redirectUserToSSD(){
+    if (Bouttonseconnecter.innerHTML = "Se connecter"){
     let tokenData = await getNewTMDBToken()
     if (!tokenData.success){
         return alert("Une erreur est survenue et je peux pas vous identifier")
     }
     location.href = `https://www.themoviedb.org/authenticate/${tokenData.request_token}?redirect_to=http://127.0.0.1:5500`
-    console.log(tokenData)
+    console.log(tokenData.request_token)
+}
 }
 
 
 
 async function getNewSession(token) {
-    const option ={
+    const options ={
         method:"POST",
         headers: {
             accept: "application/json",
@@ -68,3 +75,25 @@ async function getNewSession(token) {
 
     return sessionData
 }
+async function getPopularFilm(){
+const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${ssoTedbReadApiKey}`
+    }
+  };
+  
+    let FilmP = await fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', options)
+    let FilmPData = await FilmP.json()
+    console.log(FilmPData.results[0].poster_path)
+    return FilmPData
+}
+async function affichPopular(){
+    let FilmPData = await getPopularFilm()
+
+    console.log(FilmPData.results[0].poster_path)
+    document.getElementById('poster').src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${FilmPData.results[0].poster_path}`
+}
+
+affichPopular()
