@@ -80,7 +80,7 @@ const options = {
     }
   };
   
-    let FilmP = await fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', options)
+    let FilmP = await fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', options).catch(err => console.error("error:" + err));
     let FilmPData = await FilmP.json()
     console.log(FilmPData.results[0].poster_path)
     return FilmPData
@@ -112,4 +112,33 @@ async function affichPopular(){
     
 }
 
+async function infoProfil(){
+    const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${ssoTedbReadApiKey}`
+    }
+  };
+  
+    let profil = await fetch('https://api.themoviedb.org/3/account/20941387', options).catch(err => console.error("error:" + err));
+    let porfilDtata = await profil.json()
+    console.log(porfilDtata)
+    return porfilDtata
+}
+
+async function affichInfoProfil(){
+    let porfilDtata = await infoProfil()
+    console.log(porfilDtata)
+    const porfilDtataarray = []
+    const pushPorfil = porfilDtataarray.push(porfilDtata.avatar.tmdb.avatar_path)
+    porfilDtataarray.forEach((element) => {
+        const avatarAccueil = document.createElement("img")
+        avatarAccueil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${element}`
+        document.getElementById("emplacementavatar").appendChild(avatarAccueil)
+        console.log(element)
+}
+)}
+
+affichInfoProfil()
 affichPopular()
