@@ -82,7 +82,6 @@ const options = {
   
     let FilmP = await fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', options).catch(err => console.error("error:" + err));
     let FilmPData = await FilmP.json()
-    console.log(FilmPData.results[0].poster_path)
     return FilmPData
 }
 async function affichPopular(){
@@ -91,17 +90,24 @@ async function affichPopular(){
     const FilmDatamap = FilmPData.results.map(element => element.poster_path)
     const FilmDatamaptext = FilmPData.results.map(element => element.original_title)
     const FilmDatamapDate = FilmPData.results.map(element => element.release_date)
+    const FilmDatamapID = FilmPData.results.map(element => element.id)
     let compteur = 0
     
     FilmDatamap.forEach((element) => {
         const posterAccueil = document.createElement("img")
         posterAccueil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${element}`
-        document.getElementById("emplacementPoster").appendChild(posterAccueil)
+
+        const ancre = document.createElement("a")
+        const lien = `http://127.0.0.1:5500/movie.html?FilmID=${FilmDatamapID[compteur]}&`
+        ancre.setAttribute('href',lien)
+        ancre.appendChild(posterAccueil)
+        document.getElementById("emplacementPoster").appendChild(ancre)
         
-        const titreAccueil = document.createElement("p")
+        
+        const titreAccueil = document.createElement("li")
         titreAccueil.textContent = FilmDatamaptext[compteur]
         
-        const DateAccueil = document.createElement("p")
+        const DateAccueil = document.createElement("li")
         DateAccueil.textContent = FilmDatamapDate[compteur]
         
         document.getElementById("emplacementPoster").appendChild(titreAccueil)
@@ -139,6 +145,5 @@ async function affichInfoProfil(){
         console.log(element)
 }
 )}
-
 affichInfoProfil()
 affichPopular()
