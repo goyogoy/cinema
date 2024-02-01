@@ -98,10 +98,10 @@ async function affichPopular(){
         posterAccueil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${element}`
         document.getElementById("emplacementPoster").appendChild(posterAccueil)
         
-        const titreAccueil = document.createElement("h3")
+        const titreAccueil = document.createElement("p")
         titreAccueil.textContent = FilmDatamaptext[compteur]
         
-        const DateAccueil = document.createElement("h3")
+        const DateAccueil = document.createElement("p")
         DateAccueil.textContent = FilmDatamapDate[compteur]
         
         document.getElementById("emplacementPoster").appendChild(titreAccueil)
