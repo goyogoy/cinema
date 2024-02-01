@@ -87,12 +87,29 @@ const options = {
 }
 async function affichPopular(){
     let FilmPData = await getPopularFilm()
-
-    const posterAccueil = document.createElement("img")
-    posterAccueil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${FilmPData.results[0].poster_path}`
-    document.body.appendChild(posterAccueil)
-    const Emplacement = document.getElementById("emplacementPoster")
-    document.body.insertBefore(posterAccueil)
+    console.log(FilmPData)
+    const FilmDatamap = FilmPData.results.map(element => element.poster_path)
+    const FilmDatamaptext = FilmPData.results.map(element => element.original_title)
+    const FilmDatamapDate = FilmPData.results.map(element => element.release_date)
+    let compteur = 0
+    
+    FilmDatamap.forEach((element) => {
+        const posterAccueil = document.createElement("img")
+        posterAccueil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${element}`
+        document.getElementById("emplacementPoster").appendChild(posterAccueil)
+        
+        const titreAccueil = document.createElement("h3")
+        titreAccueil.textContent = FilmDatamaptext[compteur]
+        
+        const DateAccueil = document.createElement("h3")
+        DateAccueil.textContent = FilmDatamapDate[compteur]
+        
+        document.getElementById("emplacementPoster").appendChild(titreAccueil)
+        document.getElementById("emplacementPoster").appendChild(DateAccueil)
+        
+        compteur ++
+});
+    
 }
 
 affichPopular()
