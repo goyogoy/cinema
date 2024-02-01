@@ -16,8 +16,6 @@ window.onload = async () =>{
             sessionStorage.setItem("tmdbAccessToken", token)
             location.href = "http://127.0.0.1:5500"
             console.log(sessionData.session_id)
-            Bouttonseconnecter.innerHTML = "Se déconnecter"
-            console.log(Bouttonseconnecter.innerHTML)
         })
         .catch(err =>{
             console.error("error",err);
@@ -44,14 +42,12 @@ async function getNewTMDBToken(){
 }
 
 async function redirectUserToSSD(){
-    if (Bouttonseconnecter.innerHTML = "Se connecter"){
     let tokenData = await getNewTMDBToken()
     if (!tokenData.success){
         return alert("Une erreur est survenue et je peux pas vous identifier")
     }
     location.href = `https://www.themoviedb.org/authenticate/${tokenData.request_token}?redirect_to=http://127.0.0.1:5500`
     console.log(tokenData.request_token)
-}
 }
 
 
@@ -92,8 +88,11 @@ const options = {
 async function affichPopular(){
     let FilmPData = await getPopularFilm()
 
-    console.log(FilmPData.results[0].poster_path)
-    document.getElementById('poster').src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${FilmPData.results[0].poster_path}`
+    const posterAccueil = document.createElement("img")
+    posterAccueil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${FilmPData.results[0].poster_path}`
+    document.body.appendChild(posterAccueil)
+    const Emplacement = document.getElementById("emplacementPoster")
+    document.body.insertBefore(posterAccueil)
 }
 
 affichPopular()
