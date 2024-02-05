@@ -1,5 +1,6 @@
 const ssoTedbReadApiKey = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZjA3NGE3ZjBhMWZhOTllOThlMGVjZWJmODdkZDNmZCIsInN1YiI6IjY1YWZjMDdmYWFkOWMyMDEwOTA0NzQ1YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hqpwUyMkWou5v8500grCh-nx1iLOtZpJlOFKCDK5Gq8"
 let MovieID = location.search.split("FilmID=")[1]?.split("&")?.[0]
+let datedujour = new Date()
 async function getInfoFilm(){
     const options = {
         method: 'GET',
@@ -68,5 +69,52 @@ async function affichReview(){
     document.getElementById("commentaire").appendChild(content)
   });
 }
+
+async function infoProfil(){
+  const options = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: `Bearer ${ssoTedbReadApiKey}`
+  }
+};
+
+  let profil = await fetch(`https://api.themoviedb.org/3/account/account_id?session_id=${localStorage.tmdbSessionId}`, options).catch(err => console.error("error:" + err));
+  let porfilDtata = await profil.json()
+  return porfilDtata
+}
+
+async function affichInfoProfil(){
+  let porfilDtata = await infoProfil()
+  const porfilDtataarray = []
+  const pushPorfil = porfilDtataarray.push(porfilDtata.avatar.tmdb.avatar_path)
+  console.log(porfilDtata)
+  porfilDtataarray.forEach((element) => {
+      const avatarAccueil = document.createElement("img")
+      avatarAccueil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${element}`
+      document.getElementById("emplacementavatar").appendChild(avatarAccueil)
+}
+)}
+
+async function EnvoyerMessage(){
+  let porfilDtata = await infoProfil()
+    const Pseudo = document.createElement("h2")
+    Pseudo.textContent = porfilDtata.username
+    document.getElementById("commentaire").appendChild(Pseudo)
+
+    const photoprofil = document.createElement("img")
+    photoprofil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${porfilDtata.avatar.tmdb.avatar_path}`
+    document.getElementById("commentaire").appendChild(photoprofil)
+    
+    const Date = document.createElement("p")
+    Date.textContent = datedujour.getFullYear()+"/"+(datedujour.getMonth()+1)+"/"+datedujour.getDate()
+    document.getElementById("commentaire").appendChild(Date)
+
+    const content = document.createElement("p")
+    const contentInput = document.getElementById("commentaireecrie").value
+    content.textContent = contentInput
+    document.getElementById("commentaire").appendChild(content)
+}
+affichInfoProfil()
 affichReview()
 affichInfoFilm()

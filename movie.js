@@ -6,7 +6,7 @@ let tokenG
 
 window.onload = async () =>{
 
-    if (sessionStorage.length < 2 || sessionStorage.getItem('tmdbSessionId') == 'undefined') {
+    if (localStorage.length < 2 || localStorage.getItem('tmdbSessionId') == 'undefined') {
         hideBouttonDisconnété()
         }else{
         hideBouttonConnété()
@@ -23,8 +23,8 @@ window.onload = async () =>{
 
         getNewSession(token)
         .then(sessionData =>{
-            sessionStorage.setItem("tmdbSessionId",sessionData.session_id)
-            sessionStorage.setItem("tmdbAccessToken", token)
+            localStorage.setItem("tmdbSessionId",sessionData.session_id)
+            localStorage.setItem("tmdbAccessToken", token)
             location.href = "http://127.0.0.1:5500"
         })
         .catch(err =>{
@@ -140,7 +140,7 @@ async function infoProfil(){
     }
   };
   
-    let profil = await fetch(`https://api.themoviedb.org/3/account/account_id?session_id=${sessionStorage.tmdbSessionId}`, options).catch(err => console.error("error:" + err));
+    let profil = await fetch(`https://api.themoviedb.org/3/account/account_id?session_id=${localStorage.tmdbSessionId}`, options).catch(err => console.error("error:" + err));
     let porfilDtata = await profil.json()
     return porfilDtata
 }
@@ -153,7 +153,7 @@ async function affichInfoProfil(){
         const avatarAccueil = document.createElement("img")
         avatarAccueil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${element}`
         document.getElementById("emplacementavatar").appendChild(avatarAccueil)
-        console.log(sessionStorage.tmdbSessionId)
+        console.log(localStorageStorage.tmdbSessionId)
 }
 )}
 
@@ -201,8 +201,8 @@ page = page + 1
 }
 
 async function Sedéconnécté (){
-    sessionStorage.setItem("tmdbSessionId",undefined)
-        sessionStorage.setItem("tmdbAccessToken",undefined)
+    localStorage.setItem("tmdbSessionId",undefined)
+        localStorage.setItem("tmdbAccessToken",undefined)
         location.href = "http://127.0.0.1:5500"
 }
 
