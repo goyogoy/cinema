@@ -17,7 +17,6 @@ window.onload = async () =>{
     }
 
     let token = location.search.split("request_token=")[1]?.split("&")?.[0]
-    console.log("Onload token:",token)
 
     if(token){
 
@@ -46,7 +45,6 @@ async function getNewTMDBToken(){
     
     let tokenRequest = await fetch('https://api.themoviedb.org/3/authentication/token/new', options).catch(err => console.error("error:" + err));
     let tokenData = await tokenRequest.json()
-    console.log("token :",tokenData)
 
     return tokenData;
 }
@@ -56,10 +54,8 @@ async function redirectUserToSSD(){
     if (!tokenData.success){
         return alert("Une erreur est survenue et je peux pas vous identifier")
     }
-    console.log("Redirect",tokenData.request_token)
     location.href = `https://www.themoviedb.org/authenticate/${tokenData.request_token}?redirect_to=http://127.0.0.1:5500`
     tokenG = tokenData.request_token
-    console.log("tokenG : ",tokenG)
 }
 
 
@@ -81,8 +77,6 @@ async function getNewSession(tok) {
     }
 
     let sessionData = await sessionRequest.json()
-    console.log("session data :",sessionData)
-    console.log("token :",tok)
     return sessionData
 }
 async function getPopularFilm(){
@@ -153,7 +147,6 @@ async function affichInfoProfil(){
         const avatarAccueil = document.createElement("img")
         avatarAccueil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${element}`
         document.getElementById("emplacementavatar").appendChild(avatarAccueil)
-        console.log(localStorageStorage.tmdbSessionId)
 }
 )}
 

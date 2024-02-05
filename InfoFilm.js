@@ -19,7 +19,6 @@ async function getInfoFilm(){
 async function affichInfoFilm(){
     let infoFilmData = await getInfoFilm()
 
-    console.log(MovieID)
     document.getElementById('poster').src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${infoFilmData.poster_path}`
     document.getElementById('Titre').textContent = `${infoFilmData.original_title}`
     document.getElementById('résumé').textContent = `${infoFilmData.overview}`
@@ -88,7 +87,6 @@ async function affichInfoProfil(){
   let porfilDtata = await infoProfil()
   const porfilDtataarray = []
   const pushPorfil = porfilDtataarray.push(porfilDtata.avatar.tmdb.avatar_path)
-  console.log(porfilDtata)
   porfilDtataarray.forEach((element) => {
       const avatarAccueil = document.createElement("img")
       avatarAccueil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${element}`
