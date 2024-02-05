@@ -34,13 +34,39 @@ async function getReview(){
   
     let reviewFilm = await fetch(`https://api.themoviedb.org/3/movie/${MovieID}/reviews?language=en-US&page=1`, options).catch(err => console.error("error:" + err));
     let reviewFilmData = await reviewFilm.json()
-    console.log(reviewFilmData)
     return reviewFilmData
 }
 
 async function affichReview(){
     let reviewFilmData = await getReview()
-    console.log(reviewFilmData)
+    const reviewFilmDataContenue = reviewFilmData.results.map(element => element.content)
+    const reviewFilmDataPhoto = reviewFilmData.results.map(element => element.author_details.avatar_path)
+    const reviewFilmDataPseudo = reviewFilmData.results.map(element => element.author)
+    const reviewFilmDataDate = reviewFilmData.results.map(element => element.created_at)
+    
+    reviewFilmData.results.forEach((element) => {
+    const photoprofil = document.createElement("img")
+    if(element.author_details.avatar_path){
+    photoprofil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face${element.author_details.avatar_path}`
+    document.getElementById("commentaire").appendChild(photoprofil)
+    }else{
+    photoprofil.src = `pasdephoto.png`
+    document.getElementById("commentaire").appendChild(photoprofil)
+    }
+
+    const Pseudo = document.createElement("h2")
+    Pseudo.textContent = element.author
+    document.getElementById("commentaire").appendChild(Pseudo)
+
+    const Date = document.createElement("p")
+    const datesplit = `ù${element.created_at}&`.split("ù")[1]?.split("T")?.[0]
+    Date.textContent = datesplit
+    document.getElementById("commentaire").appendChild(Date)
+
+    const content = document.createElement("p")
+    content.textContent = element.content
+    document.getElementById("commentaire").appendChild(content)
+  });
 }
 affichReview()
 affichInfoFilm()
