@@ -28,24 +28,31 @@ async function affichRecherche(){
     document.getElementById('emplacementPoster').innerHTML = "";
     
     FilmDatamap.forEach((element) => {
+      const posterDiv = document.createElement("div")
+      posterDiv.setAttribute('class','posterDiv')
         const posterAccueil = document.createElement("img")
-        posterAccueil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${element}`
+        if(element.poster_path){
+            posterAccueil.src = `pasdeposter.png`
+            }else{
+            posterAccueil.src = `https://media.themoviedb.org/t/p/w500${element}`
+            }
 
         const ancre = document.createElement("a")
         const lien = `http://127.0.0.1:5500/movie.html?FilmID=${FilmDatamapID[compteur]}&`
         ancre.setAttribute('href',lien)
         ancre.appendChild(posterAccueil)
         document.getElementById("emplacementPoster").appendChild(ancre)
+        posterDiv.appendChild(ancre)
         
-        
-        const titreAccueil = document.createElement("li")
+        const titreAccueil = document.createElement("p")
         titreAccueil.textContent = FilmDatamaptext[compteur]
+        posterDiv.appendChild(titreAccueil)
         
-        const DateAccueil = document.createElement("li")
+        const DateAccueil = document.createElement("p")
         DateAccueil.textContent = FilmDatamapDate[compteur]
+        posterDiv.appendChild(DateAccueil)
         
-        document.getElementById("emplacementPoster").appendChild(titreAccueil)
-        document.getElementById("emplacementPoster").appendChild(DateAccueil)
+        document.getElementById("emplacementPoster").appendChild(posterDiv)
         
         compteur ++
 });

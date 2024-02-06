@@ -3,24 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Film</title>
+    <title id="Titre"></title>
+    <link href="css.css" rel="stylesheet"/>
     
 </head>
+<header>
+    <nav>        
+        <h1><a href="index.html">SupinFilm</a></h1>
+        <button><a href="recherche.html"><span class="button_top">
+        Recherche</span></a></button>
+       
+</nav>
+</header>
 <body>
-    <h1>SupinFilm</h1>
-    <h1 id="Titre"></h1>
-    <img
-    id = "poster"
-    src = " "/>
-    <p id = "résumé"></p>
-    <div id="commentaire">
+    <div id="emplacementFilm">
+        <h1 id="Titre"></h1>
+        <img
+        id = "poster"
+        src = " "/>
+        <p id = "résumé"></p>
     </div>
-    <div>
-        <div id="emplacementavatar">
-        </div>
-        <input id="commentaireecrie" type="text"
-        name="commentaireutilisateur" placeholder="ta quoi à dire ??"/>
-        <button id="boutton envoyer" Onclick="EnvoyerMessage()">Envoyer</button>
+    <div id="commentaire">
+        
+    </div>
+            <div class="form">
+                <input id="commentaireecrie" placeholder="T'as quoi a dire à propos de ce film?" required="" type="text">
+                <span class="input-border"></span> 
+            <button id="bouttonenvoyer" Onclick="EnvoyerMessage()">Envoyer</button>
     </div>
 </body>
 <script src="InfoFilm.js"></script>

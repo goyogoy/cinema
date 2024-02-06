@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="recherche.js"></script>
-    <link href="css.css" rel="stylesheet" />
+    <title>Recherche Supinflim</title>
+   
 </head>
+<header>
+    <nav>        
+        <h1><a href="index.html">SupinFilm</a></h1>
+        <button><a href="recherche.html"><span class="button_top">
+        Recherche</span></a></button>
+       
+</nav>
+</header>
+<script src="recherche.js"></script>
+<link href="css.css" rel="stylesheet" />
+
 <body>
-    <h1>SupinFilm</h1>
-    <input id="searchbar" onkeyup="affichRecherche()" type="text"
-        name="search" placeholder="Recherche ton film"/>
-    <ol id="emplacementPoster">
     
-    </ol>
+
+    <div class="container">
+        <input required="" onkeyup="affichRecherche()"  class='input' type="text" name="text" id="searchbar">
+        <label class="label">Recherche ton film</label>
+      </div>
+    <div id="emplacementPoster">
+        
+    </d>
 </body>
 </html>

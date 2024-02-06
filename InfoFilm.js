@@ -19,7 +19,7 @@ async function getInfoFilm(){
 async function affichInfoFilm(){
     let infoFilmData = await getInfoFilm()
 
-    document.getElementById('poster').src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${infoFilmData.poster_path}`
+    document.getElementById('poster').src = `https://media.themoviedb.org/t/p/w500${infoFilmData.poster_path}`
     document.getElementById('Titre').textContent = `${infoFilmData.original_title}`
     document.getElementById('résumé').textContent = `${infoFilmData.overview}`
 }
@@ -47,7 +47,7 @@ async function affichReview(){
     reviewFilmData.results.forEach((element) => {
     const photoprofil = document.createElement("img")
     if(element.author_details.avatar_path){
-    photoprofil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face${element.author_details.avatar_path}`
+    photoprofil.src = `https://media.themoviedb.org/t/p/w500${element.author_details.avatar_path}`
     document.getElementById("commentaire").appendChild(photoprofil)
     }else{
     photoprofil.src = `pasdephoto.png`
@@ -89,20 +89,22 @@ async function affichInfoProfil(){
   const pushPorfil = porfilDtataarray.push(porfilDtata.avatar.tmdb.avatar_path)
   porfilDtataarray.forEach((element) => {
       const avatarAccueil = document.createElement("img")
-      avatarAccueil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${element}`
+      avatarAccueil.src = `https://media.themoviedb.org/t/p/w500${element}`
       document.getElementById("emplacementavatar").appendChild(avatarAccueil)
 }
 )}
 
 async function EnvoyerMessage(){
   let porfilDtata = await infoProfil()
+
+    const photoprofil = document.createElement("img")
+    photoprofil.src = `https://media.themoviedb.org/t/p/w500${porfilDtata.avatar.tmdb.avatar_path}`
+    document.getElementById("commentaire").appendChild(photoprofil)
+
     const Pseudo = document.createElement("h2")
     Pseudo.textContent = porfilDtata.username
     document.getElementById("commentaire").appendChild(Pseudo)
 
-    const photoprofil = document.createElement("img")
-    photoprofil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${porfilDtata.avatar.tmdb.avatar_path}`
-    document.getElementById("commentaire").appendChild(photoprofil)
     
     const Date = document.createElement("p")
     Date.textContent = datedujour.getFullYear()+"/"+(datedujour.getMonth()+1)+"/"+datedujour.getDate()

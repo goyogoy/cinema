@@ -101,8 +101,15 @@ async function affichPopular(){
     let compteur = 0
     
     FilmDatamap.forEach((element) => {
+        const posterDiv = document.createElement("div")
+        posterDiv.setAttribute('class','posterDiv')
         const posterAccueil = document.createElement("img")
-        posterAccueil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${element}`
+        if(element.poster_path){
+            posterAccueil.src = `pasdeposter.png`
+            }else{
+            posterAccueil.src = `https://media.themoviedb.org/t/p/w500${element}`
+            }
+        
 
         const ancre = document.createElement("a")
         const lien = `http://127.0.0.1:5500/movie.html?FilmID=${FilmDatamapID[compteur]}&`
@@ -116,9 +123,12 @@ async function affichPopular(){
         
         const DateAccueil = document.createElement("li")
         DateAccueil.textContent = FilmDatamapDate[compteur]
+
+        posterDiv.appendChild(ancre)
+        posterDiv.appendChild(titreAccueil)
+        posterDiv.appendChild(DateAccueil)
         
-        document.getElementById("emplacementPoster").appendChild(titreAccueil)
-        document.getElementById("emplacementPoster").appendChild(DateAccueil)
+        document.getElementById("emplacementPoster").appendChild(posterDiv)
         
         compteur ++
 });
@@ -145,7 +155,7 @@ async function affichInfoProfil(){
     const pushPorfil = porfilDtataarray.push(porfilDtata.avatar.tmdb.avatar_path)
     porfilDtataarray.forEach((element) => {
         const avatarAccueil = document.createElement("img")
-        avatarAccueil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${element}`
+        avatarAccueil.src = `https://media.themoviedb.org/t/p/w500${element}`
         document.getElementById("emplacementavatar").appendChild(avatarAccueil)
 }
 )}
@@ -170,7 +180,9 @@ async function EnVoirPlus(){
     
     FilmDatamap.forEach((element) => {
         const posterAccueil = document.createElement("img")
-        posterAccueil.src = `https://media.themoviedb.org/t/p/w220_and_h330_face/${element}`
+        const posterDiv = document.createElement("div")
+        posterDiv.setAttribute('class','posterDiv')
+        posterAccueil.src = `https://media.themoviedb.org/t/p/w500${element}`
 
         const ancre = document.createElement("a")
         const lien = `http://127.0.0.1:5500/movie.html?FilmID=${FilmDatamapID[compteur]}&`
@@ -185,8 +197,11 @@ async function EnVoirPlus(){
         const DateAccueil = document.createElement("li")
         DateAccueil.textContent = FilmDatamapDate[compteur]
         
-        document.getElementById("emplacementPoster").appendChild(titreAccueil)
-        document.getElementById("emplacementPoster").appendChild(DateAccueil)
+        posterDiv.appendChild(ancre)
+        posterDiv.appendChild(titreAccueil)
+        posterDiv.appendChild(DateAccueil)
+        
+        document.getElementById("emplacementPoster").appendChild(posterDiv)
         
         compteur ++
 });
@@ -209,5 +224,18 @@ function hideBouttonDisconnété(){
     Bouttonsedéconnecter.style.display = "none"
 }
 
+function scrollDetect(){
+    var lastScroll = 0;
+  
+    window.onscroll = function() {
+        let currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  
+        if (currentScroll > 0 && lastScroll <= currentScroll){
+          lastScroll = currentScroll;
+          EnVoirPlus()
+        }
+  }
+}
+scrollDetect()
 affichInfoProfil()
 affichPopular()

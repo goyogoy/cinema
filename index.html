@@ -5,20 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="css.css" rel="stylesheet" />
-    <div id="emplacementavatar">
-    </div>
-    <button id="connect" Onclick="redirectUserToSSD()">Se connecter</button>
-    <button id="disconnect" Onclick="Sedéconnécté()">Se déconnecter</button>
 </head>
 <body>
-    <h1>SupinFilm</h1>
-    
-    <button><a href="recherche.html">Recherche</a></button>
+    <header>
+        <nav>
+            
+            <h1>SupinFilm</h1>
+            <button><a href="recherche.html"><span class="button_top">
+            Recherche</span></a></button>
+            <button id="connect" Onclick="redirectUserToSSD()"><span class="button_top">
+            Se connecter</span></a></button>
+            <button id="disconnect" Onclick="Sedéconnécté()"><span class="button_top">
+            Se déconnecter</span></a></button>
+        </nav>
+    </header>
   
     <ol id="emplacementPoster">
     
     </ol>
-    <button class="Plus" Onclick="EnVoirPlus()">En voir plus</button>
 </body>
 <script src="movie.js"></script>
 </html>
